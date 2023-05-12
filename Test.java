@@ -16,6 +16,8 @@ public class Test {
            // writer2.newLine();
             writer2.close();
             file.close();
+        String remove = "writing to a file!!";
+        remove.replaceAll("\bwriting to a file!!\b", "");
 
             //Reading file
         File fileobj = new File("C:\\Users\\nrobertson4799\\IdeaProjects\\ap-final-project-2-NateR4\\MyFile.txt");
@@ -23,6 +25,7 @@ public class Test {
             while (input.hasNext() ){
                 String a = input.nextLine();
                 System.out.println(a);
+
             }
     }
 
