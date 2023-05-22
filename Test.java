@@ -6,9 +6,7 @@ import java.util.*;
 
 public class Test {
     //to do, search append to existing file
-    public static void main(String[] args) {
 
-    }
     public static String fileToString(String filePath) throws Exception {
 
         String input = null;
@@ -22,7 +20,7 @@ public class Test {
     }
 
 
-    public static void pizza(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
             //Appending to a file
             FileWriter file = new FileWriter("MyFile.txt",true);
             BufferedWriter writer2 = new BufferedWriter(file);
