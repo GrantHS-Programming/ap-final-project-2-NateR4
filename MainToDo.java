@@ -13,14 +13,7 @@ public class MainToDo {
         new MainToDo();
 
     }
-    public void file() throws Exception{
-        //Creating File and writing to it
-        FileWriter file = new FileWriter("ToDo.txt");
-        BufferedWriter writer = new BufferedWriter(file);
-        writer.write("writing to a file!");
-        writer.close();
-    }
-    public void menu(){
+    public void menu() throws IOException {
         System.out.println("0. Exit list");
         System.out.println("1. Show list");
         System.out.println("2. Add item to list");
@@ -44,17 +37,47 @@ public class MainToDo {
 
     }
     public void showList(){
+        System.out.println("To Do List:\n");
+        try {
+            File fileobj = new File("C:\\Users\\nrobertson4799\\IdeaProjects\\ap-final-project-2-NateR4\\ToDo.txt");
+            Scanner input = new Scanner(fileobj);
+            int count= 1;
+            while (input.hasNext()) {
+                String text = input.nextLine();
+                System.out.println(count + ": " + text);
+                count++;
 
+                list.add(text);
+            }
+            System.out.println("");
+            menu();
+        }
+        catch (IOException ioe) {
+            System.out.println("Can't access file");
+        }
     }
-    public void addList(){
+    public void addList() {
         System.out.println("What would you like to add?");
-        String add = myScanner.next();
-    }
+        try {
+            String add = myScanner.next();
+            FileWriter file = new FileWriter("ToDo.txt", true);
+            BufferedWriter writer = new BufferedWriter(file);
+            writer.write("\n" + add);
+            writer.close();
+                menu();
+        }
+            catch (IOException ioe) {
+                System.out.println("Can't access file");
+            }
+
+        }
+
     public void removeList(){
+        showList();
+        System.out.println("What would you like to remove?");
 
     }
     public MainToDo() throws Exception{
-        file();
         menu();
     }
 }
