@@ -25,6 +25,7 @@ public class MainToDo {
         }
         if (choice == 1){
             showList();
+            menu();
         }
         if (choice ==2){
             addList();
@@ -38,6 +39,9 @@ public class MainToDo {
     }
     public void showList(){
         System.out.println("To Do List:\n");
+        for (int i = list.size()-1;i>=0;i = list.size()-1){
+            list.remove(i);
+        }
         try {
             File fileobj = new File("C:\\Users\\nrobertson4799\\IdeaProjects\\ap-final-project-2-NateR4\\ToDo.txt");
             Scanner input = new Scanner(fileobj);
@@ -50,7 +54,7 @@ public class MainToDo {
                 list.add(text);
             }
             System.out.println("");
-            menu();
+
         }
         catch (IOException ioe) {
             System.out.println("Can't access file");
@@ -62,7 +66,7 @@ public class MainToDo {
             String add = myScanner.next();
             FileWriter file = new FileWriter("ToDo.txt", true);
             BufferedWriter writer = new BufferedWriter(file);
-            writer.write("\n" + add);
+            writer.write(add + "\n");
             writer.close();
                 menu();
         }
@@ -75,7 +79,30 @@ public class MainToDo {
     public void removeList(){
         showList();
         System.out.println("What would you like to remove?");
+        int remove = myScanner.nextInt()-1;
+        try{
+            FileWriter fw = new FileWriter("ToDo.txt", false);
+            PrintWriter pw = new PrintWriter(fw, false);
+            pw.flush();
+            pw.close();
+            fw.close();
 
+        }
+        catch (IOException ioe){
+            System.out.println("Can't access file");
+        }
+    }
+    public static void clearFile()
+    {
+        try{
+            FileWriter fw = new FileWriter("ToDo.txt", false);
+            PrintWriter pw = new PrintWriter(fw, false);
+            pw.flush();
+            pw.close();
+            fw.close();
+        }catch(Exception exception){
+            System.out.println("Exception have been caught");
+        }
     }
     public MainToDo() throws Exception{
         menu();
