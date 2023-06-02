@@ -9,6 +9,7 @@ public class MainToDo {
     //universal items I need in multiple classes
     Scanner myScanner = new Scanner(System.in);
     ArrayList<String> list = new ArrayList<>();
+    ArrayList<String> files = new ArrayList<>();
     String fileName;
 
     public static void main(String[] args) throws Exception{
@@ -17,9 +18,26 @@ public class MainToDo {
     }
     //Allows you to pick a file for your list
     public void choseList() throws IOException {
-        System.out.println("Enter the name of your To-Do list. No spaces. \nIf you chose a new file, add an item first to create it.");
+        System.out.println("These are your current lists");
+        fileName = "Files.txt";
+        showList();
+        System.out.println("Type the name of your To-Do list. No spaces. \nIf you chose a new file, add an item first in the next step to create it.");
         fileName = myScanner.next();
+        FileWriter file = new FileWriter("Files.txt", true);
+        BufferedWriter writer = new BufferedWriter(file);
+        boolean print = true;
+        for (int i = 0;i< list.size();i++) {
+            if (fileName.equals(list.get(i))) {
+                print = false;
+                break;
+            }
+        }
+        if (print){
+            writer.write(fileName + "\n");
+        }
+        writer.close();
         fileName += ".txt";
+
         menu();
     }
     //Prints the menu and calls appropriate methods depending on what the user wants
@@ -29,6 +47,7 @@ public class MainToDo {
         System.out.println("2. Add item to list");
         System.out.println("3. Remove item from list");
         System.out.println("4. Chose another list");
+        System.out.println("5. Delete a list");
         System.out.println("Chose an option");
         int choice = myScanner.nextInt();
         if (choice == 0){
@@ -55,7 +74,7 @@ public class MainToDo {
     //Saves the list to an empty array list each time it runs.
     //Reads the contents of the file and saves it to the array list and prints the contents.
     public void showList(){
-        System.out.println("To Do List:\n");
+        System.out.println("List Contents:\n");
         for (int i = list.size()-1;i>=0;i = list.size()-1){
             list.remove(i);
         }
@@ -81,7 +100,8 @@ public class MainToDo {
     public void addList() {
         System.out.println("What would you like to add?");
         try {
-            String add = myScanner.next();
+            myScanner.skip("\\R?");
+            String add = myScanner.nextLine();
             FileWriter file = new FileWriter(fileName, true);
             BufferedWriter writer = new BufferedWriter(file);
             writer.write(add + "\n");
@@ -119,6 +139,13 @@ public class MainToDo {
         catch (IOException ioe){
             System.out.println("Can't access file");
         }
+    }
+    public void removeFile(){
+        System.out.println("These are your current lists");
+        fileName = "Files.txt";
+        showList();
+        System.out.println("Type the name of the File you would like to remove (with.txt at the end)");
+        fileName = myScanner.next();
     }
 
     public MainToDo() throws Exception{
