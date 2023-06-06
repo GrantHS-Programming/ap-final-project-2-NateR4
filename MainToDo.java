@@ -42,12 +42,12 @@ public class MainToDo {
     }
     //Prints the menu and calls appropriate methods depending on what the user wants
     public void menu() throws IOException {
-        System.out.println("0. Exit list");
+        System.out.println("0. Exit program");
         System.out.println("1. Show list");
         System.out.println("2. Add item to list");
         System.out.println("3. Remove item from list");
         System.out.println("4. Chose another list");
-        System.out.println("5. Delete a list");
+        System.out.println("5. Delete current list");
         System.out.println("Chose an option");
         int choice = myScanner.nextInt();
         if (choice == 0){
@@ -62,9 +62,13 @@ public class MainToDo {
         }
         if (choice == 3){
             removeList();
+            menu();
         }
         if (choice == 4){
             choseList();
+        }
+        if (choice == 5){
+            removeCurrentFile();
         }
     }
     //stops the code
@@ -117,7 +121,7 @@ public class MainToDo {
     //clears the whole file then replaces it with the contents of the array list minus the removed item.
     public void removeList(){
         showList();
-        System.out.println("What would you like to remove?");
+        System.out.println("What would you like to remove? Type the number:");
         int remove = myScanner.nextInt()-1;
         try{
             FileWriter fw = new FileWriter(fileName, false);
@@ -134,18 +138,21 @@ public class MainToDo {
                 writer.write(list.get(i) + "\n");
             }
             writer.close();
-            menu();
         }
         catch (IOException ioe){
             System.out.println("Can't access file");
         }
     }
-    public void removeFile(){
-        System.out.println("These are your current lists");
-        fileName = "Files.txt";
-        showList();
-        System.out.println("Type the name of the File you would like to remove (with.txt at the end)");
-        fileName = myScanner.next();
+    public void removeCurrentFile() throws IOException {
+        File myFile = new File(fileName);
+       // fileName = "Files.txt";
+        //removeList();
+        if (myFile.delete()) {
+            System.out.println("Deleted the file: " + myFile.getName());
+        } else {
+            System.out.println("Failed to delete the file.");
+        }
+        //choseList();
     }
 
     public MainToDo() throws Exception{
